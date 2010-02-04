@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+cp -f "/cygdrive/c/Documents and Settings/Administrator/Application Data/Mozilla/Firefox/Profiles/mvu9l7zx.default/gm_scripts/more_netflix_tabs/more_netflix_tabs.user.js" .
