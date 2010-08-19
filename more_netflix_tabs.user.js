@@ -94,16 +94,20 @@ if ( url.match(/MoviesYouveSeen/) ) {
   
   var previousIdx = -1;
   var idxRe = /idx=(\d+)/;
+  var stats_el_margin_right = 6;
   for (var i = links.snapshotLength - 1; i>=0; i--) {
     link = links.snapshotItem(i);
     var statsEl = document.createElement('span');
+    var space = document.createTextNode(' ');
     statsEl.setAttribute( "class", "stats-el" );
     statsEl.setAttribute( "id", "stats-"+( link.innerHTML.toLowerCase().replace(/\s/g, "-") ) );
     statsEl.innerHTML = "<b>" + link.innerHTML + ":</b> ";
+    statsDiv.insertBefore(space, statsDiv.firstChild);
     statsDiv.insertBefore(statsEl, statsDiv.firstChild);
     linkIdx = idxRe.exec(link.href);
     if ( linkIdx == null || linkIdx.length < 2 ) { continue; }
     linkIdx = linkIdx[1]*1;
+    if ( link.innerHTML == "Thrillers" ) stats_el_margin_right = 4;
     if ( link.innerHTML == "Not Interested" ||
          link.innerHTML == "Thrillers" || 
          link.innerHTML == "Z" ) {
@@ -124,7 +128,8 @@ if ( url.match(/MoviesYouveSeen/) ) {
   );
   addGlobalStyle(
     ".stats-el {\n" +
-    "  margin-right: 11px;\n" +
+    "  margin-right: "+stats_el_margin_right+"px;\n" +
+    "  white-space: nowrap;\n" +
     "}"
   );
 }
