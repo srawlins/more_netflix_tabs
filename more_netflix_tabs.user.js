@@ -70,6 +70,8 @@ GM_xmlhttpRequest({
         var ratings = match[1];
         yourRatingsSpan2.innerHTML = 'Ratings ('+ratings+')';
         var statsNotInterested = document.getElementById('stats-not-interested');
+        if (statsNotInterested == null) var statsNotInterested = document.getElementById('stats-thrillers');
+        if (statsNotInterested == null) var statsNotInterested = document.getElementById('stats-z');
         var statsDivTail = document.getElementById('stats-div-tail');
         if ( statsNotInterested != null && statsDivTail != null ) {
           statsNotInterested.innerHTML += "" + (ratings*1 - statsDivTail.innerHTML*1);
@@ -102,7 +104,9 @@ if ( url.match(/MoviesYouveSeen/) ) {
     linkIdx = idxRe.exec(link.href);
     if ( linkIdx == null || linkIdx.length < 2 ) { continue; }
     linkIdx = linkIdx[1]*1;
-    if ( link.innerHTML == "Not Interested" ) {
+    if ( link.innerHTML == "Not Interested" ||
+         link.innerHTML == "Thrillers" || 
+         link.innerHTML == "Z" ) {
       previousIdx = linkIdx;
       statsDivTail.innerHTML = linkIdx;
       continue;
