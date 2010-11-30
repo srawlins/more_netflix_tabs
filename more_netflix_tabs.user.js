@@ -1,20 +1,23 @@
 // ==UserScript==
 // @name           More Netflix Tabs
 // @namespace      srawlins
-// @description    Adds "Your Ratings" and "Friends, Faves" links to top
+// @description    Adds "Your Ratings" link to top
 // @include        http://www.netflix.com/*
 // @include        https://www.netflix.com/*
+// @include        http://movies.netflix.com/*
 // ==/UserScript==
 
 var url = window.location.pathname;
-var primaryNav = document.getElementById('primaryNav');
+var primaryNav = document.getElementById('top-nav');
+var navMenu = document.evaluate("ul",
+      primaryNav, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
 var yourRatingsTab = document.createElement('li');
 if ( url.match(/MoviesYouveSeen/) ) {
-  yourRatingsTab.setAttribute("class", "navItem navItem-current");
+  yourRatingsTab.setAttribute("class", "nav-item nav-item-current");
   notCurrent();
 } else {
-  yourRatingsTab.setAttribute("class", "navItem");
+  yourRatingsTab.setAttribute("class", "nav-item");
 }
 yourRatingsTab.setAttribute("id", "yrTab");
 
@@ -23,40 +26,11 @@ yourRatingsA.href = "http://www.netflix.com/MoviesYouveSeen";
 yourRatingsA.title = "Movies You've Rated";
 
 var yourRatingsSpan1 = document.createElement('span');
-yourRatingsSpan1.setAttribute("class", "w1");
-var yourRatingsSpan2 = document.createElement('span');
-yourRatingsSpan2.setAttribute("class", "w2");
 
-yourRatingsSpan2.appendChild(document.createTextNode('Your Ratings'));
-yourRatingsSpan1.appendChild(yourRatingsSpan2);
+yourRatingsSpan1.appendChild(document.createTextNode('Your Ratings'));
 yourRatingsA.appendChild(yourRatingsSpan1);
 yourRatingsTab.appendChild(yourRatingsA);
-primaryNav.appendChild(yourRatingsTab);
-
-
-var friendsTab = document.createElement('li');
-if ( url.match(/FriendPage|Community/) ) {
-  friendsTab.setAttribute("class", "navItem navItem-current");
-  notCurrent();
-} else {
-  friendsTab.setAttribute("class", "navItem");
-}
-friendsTab.setAttribute("id", "fTab");
-
-var friendsA = document.createElement('a');
-friendsA.href = "http://www.netflix.com/FriendPage";
-friendsA.title = "Friends";
-
-var friendsSpan1 = document.createElement('span');
-friendsSpan1.setAttribute("class", "w1");
-var friendsSpan2 = document.createElement('span');
-friendsSpan2.setAttribute("class", "w2");
-
-friendsSpan2.innerHTML = 'Friends<br />& Faves';
-friendsSpan1.appendChild(friendsSpan2);
-friendsA.appendChild(friendsSpan1);
-friendsTab.appendChild(friendsA);
-primaryNav.appendChild(friendsTab);
+navMenu.appendChild(yourRatingsTab);
 
 GM_xmlhttpRequest({
     method: 'GET',
@@ -68,7 +42,8 @@ GM_xmlhttpRequest({
         var re = /.span class="ratedText".(\d+).\/span./
         var match = re.exec(responseDetails.responseText);
         var ratings = match[1];
-        yourRatingsSpan2.innerHTML = 'Ratings ('+ratings+')';
+        //yourRatingsSpan2.innerHTML = 'Ratings ('+ratings+')';
+        yourRatingsSpan1.innerHTML = 'Ratings ('+ratings+')';
         var statsNotInterested = document.getElementById('stats-not-interested');
         if (statsNotInterested == null) var statsNotInterested = document.getElementById('stats-thrillers');
         if (statsNotInterested == null) var statsNotInterested = document.getElementById('stats-z');
@@ -135,12 +110,12 @@ if ( url.match(/MoviesYouveSeen/) ) {
 }
 
 function notCurrent() {
-  var wnTab = document.getElementById('wnTab');
-  var qTab  = document.getElementById('qTab');
-  var rTab  = document.getElementById('rTab');
-  wnTab.setAttribute("class", "navItem");
-  qTab.setAttribute("class", "navItem");
-  rTab.setAttribute("class", "navItem short");
+  var wnTab = document.getElementById('nav-watchinstantly');
+  var qTab  = document.getElementById('nav-queue');
+  var rTab  = document.getElementById('nav-recs');
+  wnTab.setAttribute("class", "nav-item");
+  qTab.setAttribute("class", "nav-item");
+  rTab.setAttribute("class", "nav-item");
 }
 
 function addGlobalStyle(css) {
