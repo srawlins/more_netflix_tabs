@@ -1,6 +1,6 @@
 A Greasemonkey User Script
 ==========================
-v 2.0
+v 2.1
 
 Summary
 -------
@@ -17,6 +17,11 @@ Todo
 
 Changes
 -------
+
+v 2.1
+
++ Updated for new UI (Netflix December 2010) which added a "Give Netflix" tab. I just
+  all of the tabs a liiittle smaller.
 
 v 2.0
 

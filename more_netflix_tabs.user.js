@@ -107,6 +107,11 @@ if ( url.match(/MoviesYouveSeen/) ) {
     "  white-space: nowrap;\n" +
     "}"
   );
+  addGlobalStyle(
+    "#top-nav .nav-item a span {\n" +
+    "  padding: 7px 8px;\n" +
+    "}"
+  );
 }
 
 function notCurrent() {
